@@ -1,0 +1,26 @@
+{
+  "name": "backened_development",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/riteshfauzdar63/backened_Development#readme",
+  "bugs": {
+    "url": "https://github.com/riteshfauzdar63/backened_Development/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riteshfauzdar63/backened_Development.git"
+  },
+  "license": "ISC",
+  "author": "ritesh fauzdar",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/src/index.js",
+    "dev": "nodemon backend/src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.2"
+  }
+}
