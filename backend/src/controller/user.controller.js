@@ -10,7 +10,7 @@ const registerUser = async(req, res) => {
         }
 
         // check if user already exists
-        const existingUser = await User.findOne({ email:email.toLowercase() });
+        const existingUser = await User.findOne({ email:email.toLowerCase() });
         if(existingUser){
             return res.status(409).json({message: "user already exists!"});
         }
@@ -18,7 +18,7 @@ const registerUser = async(req, res) => {
         // create new user
         const user = await User.create({
             username,
-            email:email.toLowercase(),
+            email:email.toLowerCase(),
             password,
             loggedIn: false,
         });
@@ -34,6 +34,22 @@ const registerUser = async(req, res) => {
 
     } catch (error) {
         res.status(500).json({message: "Internal Server Error", error: error.message});
+    }
+}
+
+const loginUser = async(req,res) => {
+    try {
+        // checkimg if user already exists
+        const { email, password } = req.body;
+        const user = await User.findOne({
+            email:email.toLowerCase(),
+        });
+
+        if(!user){
+            return res.status(404).json({message: "User not found"});
+        }
+    } catch (error) {
+        
     }
 }
 
