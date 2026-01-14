@@ -1,4 +1,4 @@
-import {User} from "../Models/user.model.js";
+import {User} from "../models/user.model.js";
 
 const registerUser = async(req, res) => {
     try {
@@ -35,22 +35,34 @@ const registerUser = async(req, res) => {
     } catch (error) {
         res.status(500).json({message: "Internal Server Error", error: error.message});
     }
-}
+};
 
 const loginUser = async(req,res) => {
     try {
-        // checkimg if user already exists
-        const { email, password } = req.body;
-        const user = await User.findOne({
-            email:email.toLowerCase(),
-        });
+        // checking if user already exists
+        const { email, password} = req.body;
 
-        if(!user){
-            return res.status(404).json({message: "User not found"});
-        }
-    } catch (error) {
+        const user = await User.findOne({ email:email.toLowerCase() }).select('+password');;
+
+        if(!user) return res.status(400).json({message: "User not found"});
         
+
+        // comparing password
+        const isPasswordMatch = await user.comparePassword(password);
+        if(!isPasswordMatch) return res.status(401).json({message: "Invalid password"});
+        
+
+        res.status(200).json({
+            message: "login successful",
+            user: {
+                id: user._id,
+                email: user.email,
+                username: user.username,
+            }
+        })
+    } catch (error) {
+        res.status(500).json({message: "Internal Server Error", error: error.message});
     }
 }
 
-export {registerUser};
+export {registerUser, loginUser};
