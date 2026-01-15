@@ -6,12 +6,12 @@ app.use(express.json());
 
 import userRoutes from './routes/user.routes.js';
 
-// import postRoutes from './routes/post.routes.js';
+import postRoutes from './routes/post.routes.js';
 
 
 // route decelerations
 app.use("/api/v1/users", userRoutes);
-// app.use("/api/v1/posts", postRoutes);
+app.use("/api/v1/posts", postRoutes);
 
 // example route: http://localhost:4000/api/v1/users/register
 
